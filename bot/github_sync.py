@@ -129,8 +129,17 @@ def push_all(commit_message: str) -> str | None:
 
     # Token URL'e konur ama config'e yazilmaz, loglanmaz
     remote_url = f"https://{user}:{pat}@github.com/{user}/{repo_name}.git"
-    repo.git.push(remote_url, "HEAD:refs/heads/main")
-    repo.git.push(remote_url, "refs/heads/builds:refs/heads/builds")
+    try:
+        repo.git.push(remote_url, "HEAD:refs/heads/main")
+        repo.git.push(remote_url, "refs/heads/builds:refs/heads/builds")
+    except Exception as e:
+        if "workflow" in str(e) and "scope" in str(e):
+            raise RuntimeError(
+                "Tokende 'workflow' yetkisi eksik. Cozum: github.com/settings/tokens -> Tokens (classic) -> "
+                "tokenini ac -> 'workflow' kutusunu isaretle -> 'Update token'. Token degeri degismez, "
+                "sonra botu tekrar 'start' ile calistir."
+            )
+        raise
     logger.ok(f"GitHub'a yuklendi: https://github.com/{user}/{repo_name}")
 
     repo_url = f"https://raw.githubusercontent.com/{user}/{repo_name}/main/repo.json"
