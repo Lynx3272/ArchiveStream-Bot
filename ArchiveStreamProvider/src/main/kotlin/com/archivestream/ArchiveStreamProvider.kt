@@ -5,7 +5,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.lagradost.cloudstream3.Actor
 import com.lagradost.cloudstream3.ActorData
-import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.HomePageList
 import com.lagradost.cloudstream3.HomePageResponse
 import com.lagradost.cloudstream3.LoadResponse
@@ -17,7 +16,6 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.TvType
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.mainPageOf
-import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.newEpisode
 import com.lagradost.cloudstream3.newHomePageResponse
 import com.lagradost.cloudstream3.newMovieLoadResponse
@@ -96,7 +94,7 @@ class ArchiveStreamProvider : MainAPI() {
                 )
             )
         } catch (e: Exception) {
-            logError(e)
+            println("ArchiveStream hata: $e")
             newHomePageResponse(emptyList(), false)
         }
     }
@@ -112,7 +110,7 @@ class ArchiveStreamProvider : MainAPI() {
                 it.toSearchResponse(this)
             }?.toNewSearchResponseList()
         } catch (e: Exception) {
-            logError(e)
+            println("ArchiveStream hata: $e")
             null
         }
     }
@@ -124,8 +122,8 @@ class ArchiveStreamProvider : MainAPI() {
             val res = mapper.readValue<MetadataResult>(responseText)
             res.toLoadResponse(this)
         } catch (e: Exception) {
-            logError(e)
-            throw ErrorLoadingException("Error loading: Invalid JSON response")
+            println("ArchiveStream hata: $e")
+            throw RuntimeException("Error loading: Invalid JSON response")
         }
     }
 
