@@ -118,6 +118,20 @@ def main():
         run_pipeline(auto_push=False)
         return
 
+    if "--start" in sys.argv:
+        try:
+            report = run_pipeline(auto_push=True)
+            if report["push"]:
+                print("\n  BASARILI: Tarama bitti, eklenti uretildi, GitHub'a yuklendi.")
+                print("  CloudStream > Uzantilar > Depo Ekle su linki yapistir:")
+                print(f"  {report.get('cloudstream_repo_link')}\n")
+            else:
+                print("\n  Tarama bitti; GitHub yuklemesi yapilamadi (ustteki hataya bakin).\n")
+        except Exception as e:
+            err(f"Beklenmeyen hata: {e}")
+        input("\nPencereyi kapatmak icin Enter'a bas...")
+        return
+
     print(BANNER)
     print("  ArchiveStream Otonom Bot Hazir. Baslatmak icin 'start' yazin:")
     print("  (diger komutlar: durum, cikis)")
