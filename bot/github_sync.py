@@ -23,7 +23,11 @@ def _ensure_builds_branch(repo):
     heads = repo.git.ls_remote("--heads", "origin").splitlines() if repo.remotes else []
     if any(ref.endswith("/builds") for ref in heads):
         return
-    empty_tree = repo.git.mktree(_stdin="")
+    import subprocess
+    empty_tree = subprocess.run(
+        ["git", "mktree"], cwd=str(config.BASE_DIR), input="",
+        capture_output=True, text=True, check=True, shell=False,
+    ).stdout.strip()
     commit = repo.git.commit_tree(empty_tree, m="builds dali baslatildi")
     repo.git.update_ref("refs/heads/builds", commit)
     logger.ok("builds dali olusturuldu (derleme ciktilari buraya yuklenecek)")
@@ -95,6 +99,12 @@ def push_all(commit_message: str) -> str | None:
 
     logger.git(f"Repo kontrol ediliyor: {user}/{repo_name}")
     _create_repo(pat, user, repo_name, private=not public)
+
+    identity = repo.config_reader()
+    if not identity.get_value("user", "email", fallback=""):
+        with repo.config_writer() as cw:
+            cw.set_value("user", "name", user)
+            cw.set_value("user", "email", f"{user}@users.noreply.github.com")
 
     from bot import providers_gen
     providers_gen.update_repo_links(user, repo_name)
