@@ -1,0 +1,30 @@
+{
+  "feature_films": {
+    "strategy": "api_json",
+    "last_ok_items": 40
+  },
+  "Film_Noir": {
+    "strategy": "api_json",
+    "last_ok_items": 40
+  },
+  "SciFi_Horror": {
+    "strategy": "api_json",
+    "last_ok_items": 40
+  },
+  "classiccartoons": {
+    "strategy": null,
+    "broken": true
+  },
+  "prelinger": {
+    "strategy": "api_json",
+    "last_ok_items": 40
+  },
+  "nasa": {
+    "strategy": "api_json",
+    "last_ok_items": 40
+  },
+  "classic_cartoons": {
+    "strategy": "api_json",
+    "last_ok_items": 40
+  }
+}
