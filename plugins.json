@@ -1,0 +1,21 @@
+[
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=archive.org&sz=%size%",
+        "fileHash": "sha256-5f3b6eb0b66ccc6847f6fab87a8d515cf0d7fada374df1a58c496b240da1f81a",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Lynx3272/ArchiveStream-Bot",
+        "fileSize": 30597,
+        "status": 1,
+        "authors": [
+            "ArchiveStream Bot"
+        ],
+        "tvTypes": [
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "ArchiveStreamProvider",
+        "description": "Archive.org uzerinden kamu mali (public domain) filmler, klasik cizgi filmler ve belgeseller",
+        "url": "https://cdn.jsdelivr.net/gh/Lynx3272/ArchiveStream-Bot@builds/ArchiveStreamProvider.cs3",
+        "name": "ArchiveStreamProvider"
+    }
+]
