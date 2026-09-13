@@ -100,8 +100,11 @@ def push_all(commit_message: str) -> str | None:
     logger.git(f"Repo kontrol ediliyor: {user}/{repo_name}")
     _create_repo(pat, user, repo_name, private=not public)
 
-    identity = repo.config_reader()
-    if not identity.get_value("user", "email", fallback=""):
+    try:
+        has_email = bool(repo.config_reader().get_value("user", "email"))
+    except Exception:
+        has_email = False
+    if not has_email:
         with repo.config_writer() as cw:
             cw.set_value("user", "name", user)
             cw.set_value("user", "email", f"{user}@users.noreply.github.com")
@@ -114,7 +117,7 @@ def push_all(commit_message: str) -> str | None:
     diff = repo.git.diff("--cached", "--stat")
     if diff.strip():
         identity = repo.config_reader()
-        has_email = bool(identity.get_value("user", "email", fallback=""))
+        has_email = bool(identity.get_value("user", "email"))
         if not has_email:
             with repo.config_writer() as cw:
                 cw.set_value("user", "name", user)
