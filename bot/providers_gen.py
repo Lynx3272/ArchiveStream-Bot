@@ -12,17 +12,22 @@ from bot.config import PLUGIN_DIR, DATA_DIR, BASE_DIR
 REPO_JSON = BASE_DIR / "repo.json"
 
 
-def update_repo_links(user: str, repo: str):
-    """repo.json icindeki USER/REPO yer tutucularini gercek GitHub bilgileriyle degistirir."""
-    raw_base = f"https://raw.githubusercontent.com/{user}/{repo}/main"
+def update_repo_links(user: str, repo: str) -> str:
+    """repo.json'daki plugin listesini jsdelivr CDN uzerinden isaretler ve depo linkini dondurur.
+
+    raw.githubusercontent.com bazi bolgelerde (TR dahil) arada engellendigi icin
+    CloudStream tarafindaki tum yuklemeler jsdelivr uzerinden yapilir.
+    """
+    repo_url = f"https://cdn.jsdelivr.net/gh/{user}/{repo}@main/repo.json"
     data = {
         "name": "ArchiveStream - Kamu Mali Arsiv",
         "description": "Archive.org uzerinden kamu mali ve Creative Commons film/belgesel eklentileri (ArchiveStream Bot)",
         "manifestVersion": 1,
-        "pluginLists": [f"{raw_base}/builds/plugins.json"],
+        "pluginLists": [f"https://cdn.jsdelivr.net/gh/{user}/{repo}@builds/plugins.json"],
     }
     REPO_JSON.write_text(json.dumps(data, indent=4, ensure_ascii=False), encoding="utf-8")
-    logger.ok(f"repo.json guncellendi: {raw_base}/repo.json")
+    logger.ok(f"repo.json guncellendi (CDN linkli): {repo_url}")
+    return repo_url
 
 
 def generate_plugin(catalog: dict) -> list:

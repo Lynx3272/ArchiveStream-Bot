@@ -142,6 +142,11 @@ def push_all(commit_message: str) -> str | None:
         raise
     logger.ok(f"GitHub'a yuklendi: https://github.com/{user}/{repo_name}")
 
-    repo_url = f"https://raw.githubusercontent.com/{user}/{repo_name}/main/repo.json"
+    repo_url = providers_gen.update_repo_links(user, repo_name)
+    # repo.json degisti; CDN linkli halini de push'la
+    repo.git.add(A=True)
+    if repo.git.diff("--cached", "--stat").strip():
+        repo.git.commit(m="repo.json CDN link guncellemesi")
+        repo.git.push(remote_url, "HEAD:refs/heads/main")
     logger.ok(f"CloudStream 'Depo Ekle' linki: {repo_url}")
     return repo_url

@@ -48,6 +48,11 @@ jobs:
           cp **/build/*.cs3 $GITHUB_WORKSPACE/builds/
           cp build/plugins.json $GITHUB_WORKSPACE/builds/
 
+      - name: Plugin linklerini CDN'e yönlendir
+        run: |
+          cd $GITHUB_WORKSPACE/builds
+          sed -i "s#https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/builds/#https://cdn.jsdelivr.net/gh/${GITHUB_REPOSITORY}@builds/#g" plugins.json
+
       - name: Derlemeleri yükle
         run: |
           cd $GITHUB_WORKSPACE/builds

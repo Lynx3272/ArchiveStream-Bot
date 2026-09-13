@@ -3,6 +3,6 @@
     "description": "Archive.org uzerinden kamu mali ve Creative Commons film/belgesel eklentileri (ArchiveStream Bot)",
     "manifestVersion": 1,
     "pluginLists": [
-        "https://raw.githubusercontent.com/Lynx3272/ArchiveStream-Bot/main/builds/plugins.json"
+        "https://cdn.jsdelivr.net/gh/Lynx3272/ArchiveStream-Bot@builds/plugins.json"
     ]
 }
