@@ -3,3 +3,12 @@ __pycache__/
 *.pyc
 .git-pat
 settings.json
+
+# Gradle / Android derleme ciktilari
+.gradle
+build
+**/build
+local.properties
+*.iml
+.externalNativeBuild
+.cxx

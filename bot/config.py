@@ -15,6 +15,7 @@ DEFAULT_SETTINGS = {
     "git_user": "",
     "git_repo": "",
     "auto_push": True,
+    "repo_public": True,
     "rows_per_collection": 40,
 }
 

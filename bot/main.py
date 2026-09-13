@@ -103,8 +103,9 @@ def run_pipeline(auto_push: bool) -> dict:
 
     if auto_push and settings.get("auto_push", True):
         try:
-            github_sync.push_all("ArchiveStream Bot: otomatik tarama ve eklenti guncellemesi")
+            repo_url = github_sync.push_all("ArchiveStream Bot: otomatik tarama ve eklenti guncellemesi")
             report["push"] = True
+            report["cloudstream_repo_link"] = repo_url
         except Exception as e:
             err(f"GitHub push basarisiz: {e}")
     return report
@@ -131,7 +132,9 @@ def main():
             try:
                 report = run_pipeline(auto_push=True)
                 if report["push"]:
-                    print("\n  BASARILI: Tarama bitti, eklenti uretildi, ozel GitHub reposuna yuklendi.\n")
+                    print("\n  BASARILI: Tarama bitti, eklenti uretildi, GitHub'a yuklendi.")
+                    print(f"  CloudStream > Uzantilar > Depo Ekle su linki yapistir:")
+                    print(f"  {report.get('cloudstream_repo_link')}\n")
                 else:
                     print("\n  Tarama bitti; GitHub yuklemesi yapilamadi (ustteki hataya bakin).\n")
             except KeyboardInterrupt:

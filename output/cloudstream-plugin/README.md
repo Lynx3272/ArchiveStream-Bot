@@ -1,23 +1,17 @@
 # ArchiveStream CloudStream Eklentisi
 
-Bu klasor ArchiveStream Otonom Bot tarafindan uretilmistir. Tum icerik Archive.org
-kamu mali / Creative Commons kaynaklarindan gelir (resmi API'ler uzerinden).
+Eklenti kaynagi repoda yasar: `ArchiveStreamProvider/` (CloudStream v4 uyumlu).
+GitHub Actions her push'ta otomatik derler ve `builds` dalina yukler.
 
-## Dosyalar
-- `ArchiveOrgProvider.kt` : CloudStream v4 provider kaynagi (search / main page / load / links)
-- `manifest.json`         : Eklenti manifesti
-- `catalog.json`          : Botun son taramasindan cikan katalog (rapor amacli)
-
-## Eklentiyi CloudStream'e yukleme (APK derleme)
-1. https://github.com/Blatzar/cloudstream-template-hexated (veya resmi
-   cloudstream-extensions template'i) bir depo olarak acin.
-2. `ArchiveOrgProvider.kt` dosyasini `app/src/main/java/com/archivestream/plugin/`
-   altina kopyalayin.
-3. `Plugin.kt` icinde provider'i kaydedin:
-   `registerMainAPI(ArchiveOrgProvider())`
-4. `gradlew assembleRelease` ile APK'yi derleyin.
-5. CloudStream > Ayarlar > Uzantilar > Yukle (offline) ile APK'yi secin.
+## CloudStream'e ekleme (APK derlendikten sonra)
+1. Telefonunda CloudStream > Ayarlar > Uzantilar > Depo Ekle
+2. Su adresi yapistir:
+   https://raw.githubusercontent.com/<KULLANICI>/<REPO>/main/repo.json
+3. "ArchiveStream (Kamu Mali)" eklentisi listede cikar, kur.
 
 ## Notlar
-- Icerik tamamen yasal kamuya mal olmus (public domain) yapitlardir.
-- Bot her calistiginda bu klasor guncellenir ve GitHub'a otomatik push edilir.
+- Icerik tamamen Archive.org kamu mali koleksiyonlarindan gelir.
+- Depo CloudStream tarafindan erisilebilmesi icin HERKESE ACIK olmalidir
+  (raw.githubusercontent.com ozel repolarda calismaz).
+- Bot her tarama sonrasi degisiklikleri otomatik commit + push eder,
+  Actions yeni APK'yi derler.

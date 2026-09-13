@@ -1,0 +1,8 @@
+{
+    "name": "ArchiveStream - Kamu Mali Arsiv",
+    "description": "Archive.org uzerinden kamu mali ve Creative Commons film/belgesel eklentileri (ArchiveStream Bot tarafindan yonetilir)",
+    "manifestVersion": 1,
+    "pluginLists": [
+        "https://raw.githubusercontent.com/USER/REPO/builds/plugins.json"
+    ]
+}
