@@ -51,6 +51,22 @@ def _create_repo(pat: str, user: str, repo: str, private: bool):
         raise RuntimeError(f"Repo olusturulamadi: {r2.status_code} {r2.text[:200]}")
 
 
+def _validate_pat(pat: str) -> bool:
+    r = requests.get("https://api.github.com/user", headers={"Authorization": f"token {pat}"}, timeout=20)
+    return r.status_code == 200
+
+
+def _get_valid_pat() -> str:
+    """PAT'i dogrular; gecersizse silip yeniden ister (self-healing)."""
+    for _ in range(3):
+        pat = config.get_pat()
+        if _validate_pat(pat):
+            return pat
+        logger.heal("[SELF-HEAL] GitHub tokeni gecersiz (401). Kaydedilen token silindi, tekrar soruluyor.")
+        config.PAT_FILE.unlink(missing_ok=True)
+    raise RuntimeError("GitHub tokeni 3 denemede de gecerli olmadı. Tokeni tam kopyaladigindan emin ol (ghp_ ile baslar, bosluk icermemeli).")
+
+
 def push_all(commit_message: str) -> str | None:
     """Tum degisiklikleri GitHub'a push eder. Basarida repo adresini dondurur."""
     import git as gitpython
@@ -58,7 +74,7 @@ def push_all(commit_message: str) -> str | None:
     repo = gitpython.Repo(config.BASE_DIR)
     _ensure_gitignore_safety()
 
-    pat = config.get_pat()
+    pat = _get_valid_pat()
     settings = config.load_settings()
     user, repo_name = settings.get("git_user"), settings.get("git_repo")
     if not user or not repo_name:
