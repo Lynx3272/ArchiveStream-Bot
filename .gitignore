@@ -12,3 +12,6 @@ local.properties
 *.iml
 .externalNativeBuild
 .cxx
+"build_log.txt"  
+"check_build.py"  
+"push_now.py"  
