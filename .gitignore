@@ -4,6 +4,12 @@ __pycache__/
 .git-pat
 settings.json
 
+# Yardimci scriptler ve loglar
+build_log.txt
+check_build.py
+find_parser.py
+push_now.py
+
 # Gradle / Android derleme ciktilari
 .gradle
 build
@@ -12,6 +18,3 @@ local.properties
 *.iml
 .externalNativeBuild
 .cxx
-"build_log.txt"  
-"check_build.py"  
-"push_now.py"  

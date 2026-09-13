@@ -131,7 +131,7 @@ def push_all(commit_message: str) -> str | None:
     remote_url = f"https://{user}:{pat}@github.com/{user}/{repo_name}.git"
     try:
         repo.git.push(remote_url, "HEAD:refs/heads/main")
-        repo.git.push(remote_url, "refs/heads/builds:refs/heads/builds")
+        # NOT: builds dalini lokalden pushlamiyoruz; GitHub Actions onu yonetir.
     except Exception as e:
         if "workflow" in str(e) and "scope" in str(e):
             raise RuntimeError(
